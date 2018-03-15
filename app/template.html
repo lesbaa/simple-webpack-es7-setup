@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Basic JS Webpack config</title>
+  <style>
+    body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-family: sans-serif;
+    }
+
+    .fetch-button {
+      width: 150px;
+      height: 50px;
+      display: flex;
+      background: #eee;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #555;
+      margin: 1em;
+      cursor: pointer;
+    }
+    
+    .data-container {
+      background: #eee;
+      display: block;
+      height: 50vw;
+      width: 50vw;
+    }
+  </style>
+</head>
+<body>
+  <div data-app>
+    <div class="data-container" data-container></div>
+    <div class="fetch-button" data-init-fetch>fetch more SW</div>
+  </div>
+</body>
+</html>
