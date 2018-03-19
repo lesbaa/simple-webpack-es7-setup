@@ -6,6 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Basic JS Webpack config</title>
   <style>
+    @keyframes rotate {
+      from { transform: rotate(0deg) }
+      to { transform: rotate(359.99deg) }
+    }
+
     body {
       width: 100vw;
       height: 100vh;
@@ -29,19 +34,51 @@
       margin: 1em;
       cursor: pointer;
     }
-    
+
     .data-container {
       background: #eee;
       display: block;
       height: 50vw;
       width: 50vw;
+      transition: 0.2s;
+      transform-origin: 50% 50%;
     }
+
+    .data-container.fetching {
+      transform: scale(0);
+    }
+
+    .fetching > * {
+      color: transparent;
+      transition: 0.2s;
+    }
+
+    .loader {
+      display: block;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 10px dashed cornflowerblue;
+      position: absolute;
+      top: calc(50% - 50px);
+      left: calc(50% - 50px);
+      transform: scale(0);
+      transform-origin: 50% 50%;
+      transition: 1s;
+      z-index: 1;
+    }
+
+    .loader.fetching {
+      animation: rotate 1s linear infinite;
+    }
+    
   </style>
 </head>
 <body>
   <div data-app>
     <div class="data-container" data-container></div>
-    <div class="fetch-button" data-init-fetch>fetch more SW</div>
+    <div class="fetch-button" data-init-fetch data-offset="1">fetch more SW</div>
   </div>
+  <div class="loader"></div>
 </body>
 </html>
