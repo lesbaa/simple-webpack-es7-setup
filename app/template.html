@@ -11,6 +11,11 @@
       to { transform: rotate(359.99deg) }
     }
 
+    @keyframes fade-in {
+      from { opacity: 1 }
+      to { opacity: 0 }
+    }
+
     body {
       width: 100vw;
       height: 100vh;
@@ -44,15 +49,6 @@
       transform-origin: 50% 50%;
     }
 
-    .data-container.fetching {
-      transform: scale(0);
-    }
-
-    .fetching > * {
-      color: transparent;
-      transition: 0.2s;
-    }
-
     .loader {
       display: block;
       width: 100px;
@@ -70,6 +66,10 @@
 
     .loader.fetching {
       animation: rotate 1s linear infinite;
+    }
+    
+    .fade-in {
+      animation: fade-in 0.25s reverse 1;
     }
     
   </style>

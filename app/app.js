@@ -5,7 +5,7 @@ const domContainer = document.querySelector('[data-container]')
 const clickElement = document.querySelector('[data-init-fetch]')
 const loader = document.querySelector('.loader')
 
-// only emit when all the data is returned 
+// only emit when all the data is returned
 const fetchData = (first, last) => Rx.Observable.range(first, last)
   .flatMap(async n => {
     const res = await fetch(`https://swapi.co/api/people/${n}`)
@@ -39,10 +39,10 @@ const createEventStream = ({
 const initState = {
   offset: 1,
   isFetching: false,
-  chars: [],
+  chars: {},
 }
 
-createEventStream({
+const eventStream = createEventStream({
   domNode: clickElement,
   createReceiveDataAction,
   createRequestDataAction,
@@ -61,13 +61,20 @@ function reducer (
 ) {
   switch (type) {
     case 'apiReceive': {
+      const newChars = payload.chars.reduce(
+        (chars, char) => ({
+          ...chars,
+          [char.name]: char,
+        }),
+        {}
+      )
       return {
         ...state,
         isFetching: false,
-        chars: [
+        chars: {
           ...state.chars,
-          ...payload.chars,
-        ],
+          ...newChars,
+        },
       }
     }
     case 'apiRequest': {
@@ -95,19 +102,23 @@ function renderMarkup({
     domContainer.classList.remove('fetching')
     loader.classList.remove('fetching')
   }
-  domContainer.innerHTML = chars
+  const markup = Object.values(chars)
     .reduce((acc, { name }) => acc + `
-      <div>
+      <div class="fade-in">
         ${name}
-      <div />
+      </div>
     `, '')
+
+  if (markup !== domContainer.innerHTML) {
+    domContainer.innerHTML = markup
+  }
 }
 
 function createReceiveDataAction(data) {
   return {
     type: 'apiReceive',
     payload: {
-      chars: [...data],
+      chars: data,
     },
   }
 }
